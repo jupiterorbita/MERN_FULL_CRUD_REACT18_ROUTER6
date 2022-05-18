@@ -8,9 +8,10 @@ module.exports = {
     findAll: (req, res) => {
         Note.find()
             .then( (notes) => {
-                // 🆘 
+                // 🆘 what we send back to the client (React) is what we will receive in axios's .then(res => res.data)
                 console.log(notes);
                 // return res.json({all_notes: notes, status: "ok"})
+                // if we return just the object, in this case, it's an array
                 return res.json(notes)
             })
             .catch( err => res.json(err))
@@ -19,7 +20,7 @@ module.exports = {
     // CREATE
     create: (req, res) => {
         // pass in body data
-        console.log(req.body);
+        console.log(req.body); // if it's undefined check middleware
         Note.create(req.body)
             .then( newNote => {
                 console.log("DB Success created new Note");
@@ -42,8 +43,8 @@ module.exports = {
 
     // UPDATE
     update: (req, res) => {
-        console.log("UPDATE id:", req.params.id);
-        console.log("UPDATE OBJ:", req.body);
+        console.log("UPDATE id:", req.params.id); // the id
+        console.log("UPDATE OBJ:", req.body); // the {object}
         // Note.findOneAndUpdate({_id: req.req.params.id})
         Note.findByIdAndUpdate(req.params.id, req.body, {
             new: true, runValidators: true
@@ -52,7 +53,6 @@ module.exports = {
             .catch(err => res.json(err))
     },
 
-
     // DELETE
     delete: (req, res) => {
         console.log(req.params.id);
@@ -60,14 +60,5 @@ module.exports = {
             .then(result => res.json(result))
             .catch(err => res.json(err))
     }
- 
-
-
-
-
-
-
-
-
 
 }

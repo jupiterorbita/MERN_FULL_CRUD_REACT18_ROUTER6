@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+// import css from module as object
 import noteStyle from "./Main.module.css";
 import { Link } from 'react-router-dom'
 
@@ -19,15 +20,20 @@ const Main = (props) => {
     // DELETE
     const deleteNote = (deleteId) => {
         // console.log(deleteId);
-        axios.delete("http://localhost:8000/api/notes/" + deleteId)
-            .then(res => {
-                console.log(res.data);
-                console.log("DELETE SUCCESS!");
 
-                // remove from the DOM after a successful delete
-                setNotes(notes.filter( (note) => note._id !== deleteId));
-            })
-            .catch(err => console.log(err))
+        if (window.confirm("really?")) {
+
+            // make a request to the DB to delete
+            axios.delete("http://localhost:8000/api/notes/" + deleteId)
+                .then(res => {
+                    console.log(res.data);
+                    console.log("DELETE SUCCESS!");
+
+                    // remove from the DOM after a successful delete
+                    setNotes(notes.filter((note) => note._id !== deleteId));
+                })
+                .catch(err => console.log(err))
+        }
     }
 
 
@@ -51,7 +57,7 @@ const Main = (props) => {
                             </p>
                             <span>{note.createdAt}</span><br />
                             <button>
-                                <Link to={"/update/"+note._id}>Edit</Link>
+                                <Link to={"/update/" + note._id}>Edit</Link>
                             </button>
                             <button onClick={() => deleteNote(note._id)}>delete</button>
                         </div>

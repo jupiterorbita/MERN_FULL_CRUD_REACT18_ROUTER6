@@ -5,13 +5,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 const Update = (props) => {
     const navigate = useNavigate();
 
+    // grab the var ':id' from the react url "/update/:id"
     const {id} = useParams();
 
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [isImportant, setIsImportant] = useState(false)
 
-    // get the data from the DB and put it in state to have the form pre-filled
+    // get the data from the DB and put it in state to have the form pre-filled (double binding)
     useEffect(() => {
         axios.get("http://localhost:8000/api/notes/" + id)
             .then(res => {
@@ -23,6 +24,7 @@ const Update = (props) => {
             .catch(err => console.log(err))
     }, [id])
 
+    // UPDATE form submission
     const updateNote = (e) => {
         e.preventDefault()
 
@@ -33,7 +35,7 @@ const Update = (props) => {
         }
         console.log(updatedNote);
 
-        // POST to the DB with the obj
+        // POST to the DB ,with the obj
         axios.put("http://localhost:8000/api/notes/"+ id, updatedNote)
             .then(res => {
                 console.log(res.data);
@@ -49,15 +51,20 @@ const Update = (props) => {
 
     return (
         <div>
+            <h3>UPDATE</h3>
             <p>
-                {JSON.stringify(title)} <br />
+                {/* {JSON.stringify(title)} <br />
                 {JSON.stringify(content)} <br />
-                {JSON.stringify(isImportant)}<br />
+                {JSON.stringify(isImportant)}<br /> */}
             </p>
-            <form onSubmit={updateNote}>
-                title: <input onChange={(e) => setTitle(e.target.value)} value={title} /> <br />
 
-                content: <input onChange={(e) => setContent(e.target.value)} value={content} /> <br />
+            {/* FORM */}
+            <form onSubmit={updateNote}>
+                title: 
+                <input onChange={(e) => setTitle(e.target.value)} value={title} /> <br />
+
+                content: 
+                <input onChange={(e) => setContent(e.target.value)} value={content} /> <br />
 
                 <input type="checkbox" onChange={(e) => setIsImportant(e.target.checked)} checked={isImportant} /> is this important?<br />
 

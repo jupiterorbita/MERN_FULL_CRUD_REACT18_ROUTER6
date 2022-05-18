@@ -7,7 +7,9 @@ import Update from './components/Update';
 
 function App() {
   return (
+    // 👉 BrowserRouter is in index.js
     <div className="App">
+
       <h1>Notes 📝</h1>
       <Link to="/notes">Home</Link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Link to="/create">Create</Link>
@@ -26,11 +28,8 @@ function App() {
         {/* UPDATE */}
         <Route path="/update/:id" element={<Update/>} />
 
-
-
         {/* REDIRECT */}
         <Route path='*' element={<Navigate to="/notes/" replace />} />
-
 
       </Routes>
 

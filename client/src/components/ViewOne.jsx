@@ -13,6 +13,7 @@ const thisComponentStyle = {
 
 const ViewOne = (props) => {
 
+    // grab the variable from the url :id :var :whatever
     const { id } = useParams();
     console.log(id);
 
@@ -21,13 +22,12 @@ const ViewOne = (props) => {
     useEffect(() => {
         axios.get("http://localhost:8000/api/notes/" + id)
             .then(res => {
+                // always look at what the server is coming back as BEFORE you set the state var
                 console.log(res.data);
                 setThisNote(res.data)
             })
             .catch(err => console.log(err))
     }, [id])
-
-
 
     return (
         <>
@@ -39,7 +39,7 @@ const ViewOne = (props) => {
                         <p>{thisNote.createdAt}</p>
                         {/* {JSON.stringify(thisNote)} */}
                     </div >
-                ) : "loading"
+                ) : "loading..."
             }
         </>
     )
